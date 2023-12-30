@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculatrice avec le JavaScript</title>
+    <style>
+         body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        form {
+            text-align: center;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"],
+        input[type="button"] {
+            padding: 10px;
+            font-size: 1em;
+            margin: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .operation-button {
+            background-color: #4285f4;
+            color: white;
+            cursor: pointer;
+            border: 1px solid #4285f4;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .operation-button:hover {
+            background-color: #2c65f0;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body> 
+    <h1>Bienvenue dans votre calculatrice</h1>  
+    <form name="calculatrice">
+        <input type="text" name="premierNombre" placeholder="Entrez le premier nombre" />
+        <input type="text" name="deuxiemeNombre" placeholder="Entrez le deuxième nombre" />
+        <input type="button" value="+" class="operation-button" onClick="effectuerOperation('addition')" />
+        <input type="button" value="-" class="operation-button" onClick="effectuerOperation('soustraction')" />
+        <input type="button" value="*" class="operation-button" onClick="effectuerOperation('multiplication')" />
+        <input type="button" value="/" class="operation-button" onClick="effectuerOperation('division')" />
+        <br />
+        <input type="text" name="resultat" placeholder="Résultat" readonly />
+        <div class="error-message" id="error"></div>
+    </form>
+
+    <script>
+        const form = document.forms.calculatrice;
+        const error = document.getElementById("error");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            const nom = form.elements.premierNombre.value;
+            if (nom === "") {
+                error.textContent = "Veuillez remplir tous les champs.";
+            } else {
+                error.textContent = "";
+            }
+        });
+
+        function effectuerOperation(operation) {
+            const nombre1 = parseFloat(form.elements.premierNombre.value);
+            const nombre2 = parseFloat(form.elements.deuxiemeNombre.value);
+            const resultatField = form.elements.resultat;
+
+            let resultat;
+            switch (operation) {
+                case "addition":
+                    resultat = nombre1 + nombre2;
+                    break;
+                case "soustraction":
+                    resultat = nombre1 - nombre2;
+                    break;
+                case "multiplication":
+                    resultat = nombre1 * nombre2;
+                    break;
+                case "division":
+                    resultat = (nombre2 !== 0) ? nombre1 / nombre2 : "Erreur !";
+                    break;
+            }
+
+            resultatField.value = resultat;
+        }
+    </script>
+</body>
+</html>
